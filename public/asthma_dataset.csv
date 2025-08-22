@@ -1,0 +1,101 @@
+ID,AGE,GENDER,SMOKING_STATUS,ASTHMA_DIAGNOSIS,MEDICATION,PEAK_FLOW
+1,26,Female,Non-Smoker,Yes,Inhaler,175
+2,52,Female,Ex-Smoker,No,None,156
+3,56,Female,Ex-Smoker,Yes,Inhaler,236
+4,55,Male,Current Smoker,Yes,Controller Medication,378
+5,43,Female,Current Smoker,No,None,159
+6,23,Male,Non-Smoker,No,None,376
+7,33,Female,Current Smoker,No,None,296
+8,20,Male,Current Smoker,Yes,Controller Medication,322
+9,36,Male,Current Smoker,No,None,175
+10,27,Male,Ex-Smoker,No,None,264
+11,34,Female,Ex-Smoker,No,None,240
+12,43,Male,Current Smoker,No,None,354
+13,51,Female,Non-Smoker,Yes,Inhaler,171
+14,54,Male,Non-Smoker,Yes,Inhaler,327
+15,22,Female,Current Smoker,Yes,Inhaler,304
+16,53,Female,Non-Smoker,Yes,Controller Medication,336
+17,39,Female,Current Smoker,Yes,Controller Medication,307
+18,34,Male,Non-Smoker,Yes,Controller Medication,372
+19,51,Male,Current Smoker,No,None,239
+20,37,Male,Non-Smoker,Yes,Controller Medication,309
+21,52,Female,Ex-Smoker,No,None,323
+22,24,Female,Non-Smoker,No,None,160
+23,56,Female,Ex-Smoker,Yes,Controller Medication,286
+24,23,Female,Current Smoker,Yes,Inhaler,282
+25,58,Male,Non-Smoker,No,None,248
+26,27,Male,Ex-Smoker,No,None,325
+27,41,Male,Non-Smoker,No,None,233
+28,27,Male,Current Smoker,No,None,346
+29,63,Male,Current Smoker,No,None,379
+30,25,Female,Current Smoker,Yes,Inhaler,207
+31,42,Male,Non-Smoker,Yes,Inhaler,168
+32,18,Female,Non-Smoker,No,None,200
+33,22,Female,Ex-Smoker,Yes,Inhaler,323
+34,54,Male,Non-Smoker,Yes,Controller Medication,386
+35,22,Female,Ex-Smoker,Yes,Controller Medication,257
+36,34,Female,Current Smoker,Yes,Controller Medication,349
+37,20,Male,Current Smoker,No,None,273
+38,43,Male,Current Smoker,No,None,260
+39,19,Male,Non-Smoker,No,None,249
+40,65,Female,Non-Smoker,Yes,Controller Medication,203
+41,22,Female,Current Smoker,No,None,384
+42,58,Female,Current Smoker,Yes,Inhaler,253
+43,59,Male,Current Smoker,Yes,Inhaler,383
+44,54,Male,Ex-Smoker,Yes,Controller Medication,202
+45,57,Female,Ex-Smoker,Yes,Inhaler,310
+46,45,Male,Non-Smoker,No,None,287
+47,62,Female,Ex-Smoker,No,None,348
+48,39,Male,Non-Smoker,Yes,Controller Medication,230
+49,43,Female,Non-Smoker,No,None,388
+50,20,Male,Current Smoker,No,None,331
+51,59,Female,Non-Smoker,No,None,288
+52,21,Female,Non-Smoker,No,None,378
+53,58,Male,Current Smoker,No,None,284
+54,23,Male,Current Smoker,Yes,Controller Medication,205
+55,48,Male,Current Smoker,No,None,352
+56,54,Female,Ex-Smoker,Yes,Inhaler,383
+57,47,Male,Ex-Smoker,No,None,267
+58,50,Male,Non-Smoker,No,None,269
+59,64,Female,Ex-Smoker,No,None,398
+60,35,Male,Non-Smoker,Yes,Inhaler,298
+61,28,Female,Current Smoker,No,None,245
+62,45,Female,Ex-Smoker,Yes,Controller Medication,312
+63,31,Male,Non-Smoker,No,None,289
+64,49,Female,Non-Smoker,Yes,Inhaler,275
+65,38,Male,Current Smoker,Yes,Controller Medication,334
+66,26,Female,Ex-Smoker,No,None,198
+67,55,Male,Non-Smoker,Yes,Inhaler,361
+68,42,Female,Current Smoker,No,None,267
+69,29,Male,Non-Smoker,Yes,Controller Medication,291
+70,61,Female,Ex-Smoker,Yes,Inhaler,318
+71,33,Male,Current Smoker,No,None,256
+72,47,Female,Non-Smoker,Yes,Controller Medication,303
+73,25,Male,Ex-Smoker,Yes,Inhaler,278
+74,52,Male,Current Smoker,No,None,342
+75,39,Female,Non-Smoker,Yes,Inhaler,285
+76,44,Male,Ex-Smoker,No,None,231
+77,30,Female,Current Smoker,Yes,Controller Medication,296
+78,58,Male,Non-Smoker,No,None,354
+79,36,Female,Ex-Smoker,Yes,Inhaler,269
+80,41,Male,Non-Smoker,No,None,298
+81,27,Female,Current Smoker,No,None,234
+82,50,Male,Current Smoker,Yes,Controller Medication,367
+83,35,Female,Non-Smoker,Yes,Inhaler,312
+84,46,Male,Ex-Smoker,No,None,245
+85,32,Female,Current Smoker,Yes,Controller Medication,289
+86,57,Male,Non-Smoker,Yes,Inhaler,325
+87,40,Female,Ex-Smoker,No,None,278
+88,29,Male,Non-Smoker,Yes,Controller Medication,301
+89,53,Female,Current Smoker,Yes,Inhaler,334
+90,38,Male,Non-Smoker,No,None,267
+91,48,Female,Ex-Smoker,Yes,Controller Medication,318
+92,31,Male,Current Smoker,No,None,245
+93,56,Female,Non-Smoker,Yes,Inhaler,356
+94,42,Male,Ex-Smoker,Yes,Controller Medication,298
+95,25,Female,Current Smoker,No,None,234
+96,60,Male,Non-Smoker,Yes,Inhaler,342
+97,37,Female,Current Smoker,Yes,Controller Medication,289
+98,45,Male,Non-Smoker,No,None,256
+99,28,Female,Ex-Smoker,Yes,Inhaler,278
+100,51,Male,Current Smoker,No,None,312
