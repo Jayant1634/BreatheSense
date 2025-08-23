@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuth } from "@/lib/contexts/AuthContext";
+import { useAuth, User } from "@/lib/contexts/AuthContext";
 import { Sidebar, SidebarBody, SidebarLink, useSidebar, LoadingSpinner } from "@/components/ui/sidebar";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -20,7 +20,7 @@ import {
 } from "@tabler/icons-react";
 
 // Separate component that uses the sidebar context
-function DashboardContent({ user, onLogout }: { user: unknown; onLogout: () => void }) {
+function DashboardContent({ user, onLogout }: { user: User; onLogout: () => void }) {
   const { open, animate } = useSidebar();
 
   // Define links based on user role

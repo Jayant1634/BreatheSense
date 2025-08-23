@@ -242,20 +242,23 @@ export const NavbarLogo = () => {
   );
 };
 
-export const NavbarButton = <T extends React.ElementType = "a">({
-  href,
-  as: Tag = "a" as T,
-  children,
-  className,
-  variant = "primary",
-  ...props
-}: {
+interface NavbarButtonProps {
   href?: string;
-  as?: T;
   children: React.ReactNode;
   className?: string;
   variant?: "primary" | "secondary" | "dark" | "gradient";
-} & Omit<React.ComponentPropsWithoutRef<T>, 'as' | 'children' | 'className'>) => {
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+}
+
+export const NavbarButton: React.FC<NavbarButtonProps> = ({
+  href,
+  children,
+  className,
+  variant = "primary",
+  onClick,
+  type = "button",
+}) => {
   const baseStyles =
     "px-4 py-2 rounded-md text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
@@ -268,24 +271,24 @@ export const NavbarButton = <T extends React.ElementType = "a">({
       "bg-gradient-to-b from-[var(--primary)] to-[var(--primary-light)] text-white shadow-lg",
   };
 
+  const combinedClassName = cn(baseStyles, variantStyles[variant], className);
+
   if (href) {
     return (
-      <Link
-        href={href}
-        className={cn(baseStyles, variantStyles[variant], className)}
-      >
+      <Link href={href} className={combinedClassName}>
         {children}
       </Link>
     );
   }
 
   return (
-    <Tag
-      className={cn(baseStyles, variantStyles[variant], className)}
-      {...(props as Record<string, unknown>)}
+    <button
+      type={type}
+      onClick={onClick}
+      className={combinedClassName}
     >
       {children}
-    </Tag>
+    </button>
   );
 };
 

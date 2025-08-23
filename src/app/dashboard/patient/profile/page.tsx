@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/lib/contexts/AuthContext';
+import { useAuth, User } from '@/lib/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
@@ -32,7 +32,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingHealth, setIsEditingHealth] = useState(false);
-  const [editedUser, setEditedUser] = useState<typeof user | null>(null);
+  const [editedUser, setEditedUser] = useState<User | null>(null);
   const [editedHealth, setEditedHealth] = useState<HealthProfile | null>(null);
 
   // Mock health profile data - in real app, this would come from API
@@ -196,7 +196,7 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   value={editedUser?.firstName || ''}
-                  onChange={(e) => setEditedUser({ ...editedUser, firstName: e.target.value })}
+                  onChange={(e) => setEditedUser(prev => prev ? { ...prev, firstName: e.target.value } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               ) : (
@@ -210,7 +210,7 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   value={editedUser?.lastName || ''}
-                  onChange={(e) => setEditedUser({ ...editedUser, lastName: e.target.value })}
+                  onChange={(e) => setEditedUser(prev => prev ? { ...prev, lastName: e.target.value } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               ) : (
@@ -224,7 +224,7 @@ export default function ProfilePage() {
                 <input
                   type="email"
                   value={editedUser?.email || ''}
-                  onChange={(e) => setEditedUser({ ...editedUser, email: e.target.value })}
+                  onChange={(e) => setEditedUser(prev => prev ? { ...prev, email: e.target.value } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               ) : (
@@ -237,13 +237,13 @@ export default function ProfilePage() {
               {isEditing ? (
                 <input
                   type="tel"
-                  value={editedUser?.phone || ''}
-                  onChange={(e) => setEditedUser({ ...editedUser, phone: e.target.value })}
+                  value={editedUser?.phoneNumber || ''}
+                  onChange={(e) => setEditedUser(prev => prev ? { ...prev, phoneNumber: e.target.value } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   placeholder="+1 (555) 123-4567"
                 />
               ) : (
-                <p className="text-sm text-neutral-900 font-medium">{user.phone || 'Not provided'}</p>
+                <p className="text-sm text-neutral-900 font-medium">{user.phoneNumber || 'Not provided'}</p>
               )}
             </div>
 
@@ -252,12 +252,12 @@ export default function ProfilePage() {
               {isEditing ? (
                 <input
                   type="date"
-                  value={editedUser?.dateOfBirth || ''}
-                  onChange={(e) => setEditedUser({ ...editedUser, dateOfBirth: e.target.value })}
+                  value={editedUser?.dateOfBirth ? (editedUser.dateOfBirth instanceof Date ? editedUser.dateOfBirth.toISOString().split('T')[0] : editedUser.dateOfBirth) : ''}
+                  onChange={(e) => setEditedUser(prev => prev ? { ...prev, dateOfBirth: new Date(e.target.value) } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               ) : (
-                <p className="text-sm text-neutral-900 font-medium">{user.dateOfBirth || 'Not provided'}</p>
+                <p className="text-sm text-neutral-900 font-medium">{user.dateOfBirth ? (user.dateOfBirth instanceof Date ? user.dateOfBirth.toLocaleDateString() : user.dateOfBirth) : 'Not provided'}</p>
               )}
             </div>
 
@@ -268,13 +268,18 @@ export default function ProfilePage() {
                   <input
                     type="text"
                     value={editedUser?.address?.street || ''}
-                    onChange={(e) => setEditedUser({ 
-                      ...editedUser, 
+                    onChange={(e) => setEditedUser(prev => prev ? { 
+                      ...prev, 
                       address: { 
-                        ...editedUser?.address, 
+                        street: '',
+                        city: '',
+                        state: '',
+                        zipCode: '',
+                        country: '',
+                        ...prev.address, 
                         street: e.target.value 
                       } 
-                    })}
+                    } : null)}
                     className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     placeholder="Street Address"
                   />
@@ -282,26 +287,36 @@ export default function ProfilePage() {
                     <input
                       type="text"
                       value={editedUser?.address?.city || ''}
-                      onChange={(e) => setEditedUser({ 
-                        ...editedUser, 
+                      onChange={(e) => setEditedUser(prev => prev ? { 
+                        ...prev, 
                         address: { 
-                          ...editedUser?.address, 
+                          street: '',
+                        city: '',
+                        state: '',
+                        zipCode: '',
+                        country: '',
+                        ...prev.address, 
                           city: e.target.value 
                         } 
-                      })}
+                      } : null)}
                       className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       placeholder="City"
                     />
                     <input
                       type="text"
                       value={editedUser?.address?.state || ''}
-                      onChange={(e) => setEditedUser({ 
-                        ...editedUser, 
+                      onChange={(e) => setEditedUser(prev => prev ? { 
+                        ...prev, 
                         address: { 
-                          ...editedUser?.address, 
+                          street: '',
+                        city: '',
+                        state: '',
+                        zipCode: '',
+                        country: '',
+                        ...prev.address, 
                           state: e.target.value 
                         } 
-                      })}
+                      } : null)}
                       className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       placeholder="State"
                     />
@@ -310,26 +325,36 @@ export default function ProfilePage() {
                     <input
                       type="text"
                       value={editedUser?.address?.zipCode || ''}
-                      onChange={(e) => setEditedUser({ 
-                        ...editedUser, 
+                      onChange={(e) => setEditedUser(prev => prev ? { 
+                        ...prev, 
                         address: { 
-                          ...editedUser?.address, 
+                          street: '',
+                        city: '',
+                        state: '',
+                        zipCode: '',
+                        country: '',
+                        ...prev.address, 
                           zipCode: e.target.value 
                         } 
-                      })}
+                      } : null)}
                       className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       placeholder="ZIP Code"
                     />
                     <input
                       type="text"
                       value={editedUser?.address?.country || ''}
-                      onChange={(e) => setEditedUser({ 
-                        ...editedUser, 
+                      onChange={(e) => setEditedUser(prev => prev ? { 
+                        ...prev, 
                         address: { 
-                          ...editedUser?.address, 
+                          street: '',
+                        city: '',
+                        state: '',
+                        zipCode: '',
+                        country: '',
+                        ...prev.address, 
                           country: e.target.value 
                         } 
-                      })}
+                      } : null)}
                       className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       placeholder="Country"
                     />
@@ -387,7 +412,7 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   value={editedHealth?.height || ''}
-                  onChange={(e) => setEditedHealth({ ...editedHealth, height: e.target.value })}
+                  onChange={(e) => setEditedHealth(prev => prev ? { ...prev, height: e.target.value } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   placeholder="e.g., 5'8&quot;"
                 />
@@ -402,7 +427,7 @@ export default function ProfilePage() {
                 <input
                   type="text"
                   value={editedHealth?.weight || ''}
-                  onChange={(e) => setEditedHealth({ ...editedHealth, weight: e.target.value })}
+                  onChange={(e) => setEditedHealth(prev => prev ? { ...prev, weight: e.target.value } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   placeholder="e.g., 150 lbs"
                 />
@@ -416,7 +441,7 @@ export default function ProfilePage() {
               {isEditingHealth ? (
                 <select
                   value={editedHealth?.bloodType || ''}
-                  onChange={(e) => setEditedHealth({ ...editedHealth, bloodType: e.target.value })}
+                  onChange={(e) => setEditedHealth(prev => prev ? { ...prev, bloodType: e.target.value } : null)}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 >
                   <option value="">Select blood type</option>
@@ -441,30 +466,30 @@ export default function ProfilePage() {
                   <input
                     type="text"
                     value={editedHealth?.emergencyContact?.name || ''}
-                    onChange={(e) => setEditedHealth({
-                      ...editedHealth,
-                      emergencyContact: { ...editedHealth.emergencyContact, name: e.target.value }
-                    })}
+                    onChange={(e) => setEditedHealth(prev => prev ? {
+                      ...prev,
+                      emergencyContact: { ...prev.emergencyContact, name: e.target.value }
+                    } : null)}
                     className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     placeholder="Contact name"
                   />
                   <input
                     type="text"
                     value={editedHealth?.emergencyContact?.relationship || ''}
-                    onChange={(e) => setEditedHealth({
-                      ...editedHealth,
-                      emergencyContact: { ...editedHealth.emergencyContact, relationship: e.target.value }
-                    })}
+                    onChange={(e) => setEditedHealth(prev => prev ? {
+                      ...prev,
+                      emergencyContact: { ...prev.emergencyContact, relationship: e.target.value }
+                    } : null)}
                     className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     placeholder="Relationship"
                   />
                   <input
                     type="tel"
                     value={editedHealth?.emergencyContact?.phone || ''}
-                    onChange={(e) => setEditedHealth({
-                      ...editedHealth,
-                      emergencyContact: { ...editedHealth.emergencyContact, phone: e.target.value }
-                    })}
+                    onChange={(e) => setEditedHealth(prev => prev ? {
+                      ...prev,
+                      emergencyContact: { ...prev.emergencyContact, phone: e.target.value }
+                    } : null)}
                     className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     placeholder="Phone number"
                   />
