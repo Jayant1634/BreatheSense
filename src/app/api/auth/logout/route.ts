@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { createSuccessResponse } from '@/lib/auth';
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     // Note: JWT tokens are stateless, so server-side logout is not possible
     // The client should remove the token from storage
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       message: 'Logout successful'
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Logout error:', error);
     return createSuccessResponse({
       message: 'Logout successful'

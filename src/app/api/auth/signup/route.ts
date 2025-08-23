@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/lib/models/User';
 import { generateToken, createErrorResponse, createSuccessResponse } from '@/lib/auth';
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Create new user
-    const userData: any = {
+    const userData: Record<string, unknown> = {
       email,
       password,
       firstName,
@@ -74,17 +74,18 @@ export async function POST(req: NextRequest) {
       token
     }, 201);
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Signup error:', error);
     
     // Handle mongoose validation errors
-    if (error.name === 'ValidationError') {
-      const validationErrors = Object.values(error.errors).map((err: any) => err.message);
+    if (error && typeof error === 'object' && 'name' in error && error.name === 'ValidationError') {
+      const validationError = error as unknown as { errors: Record<string, { message: string }> };
+      const validationErrors = Object.values(validationError.errors).map((err: { message: string }) => err.message);
       return createErrorResponse(`Validation error: ${validationErrors.join(', ')}`, 400);
     }
 
     // Handle duplicate key errors
-    if (error.code === 11000) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 11000) {
       return createErrorResponse('User with this email already exists', 409);
     }
 

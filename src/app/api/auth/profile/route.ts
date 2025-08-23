@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/lib/models/User';
 import { requireAuth, createErrorResponse, createSuccessResponse } from '@/lib/auth';
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       user: userData
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Profile fetch error:', error);
     return createErrorResponse('Internal server error', 500);
   }
@@ -42,7 +42,7 @@ export async function PUT(req: NextRequest) {
     const { firstName, lastName, dateOfBirth, phoneNumber, address, medicalHistory, emergencyContact } = body;
 
     // Update user data
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     if (firstName !== undefined) updateData.firstName = firstName;
     if (lastName !== undefined) updateData.lastName = lastName;
     if (dateOfBirth !== undefined) updateData.dateOfBirth = new Date(dateOfBirth);
@@ -66,12 +66,13 @@ export async function PUT(req: NextRequest) {
       user: updatedUser
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Profile update error:', error);
     
     // Handle mongoose validation errors
-    if (error.name === 'ValidationError') {
-      const validationErrors = Object.values(error.errors).map((err: any) => err.message);
+    if (error && typeof error === 'object' && 'name' in error && error.name === 'ValidationError') {
+      const validationError = error as unknown as { errors: Record<string, { message: string }> };
+      const validationErrors = Object.values(validationError.errors).map((err: { message: string }) => err.message);
       return createErrorResponse(`Validation error: ${validationErrors.join(', ')}`, 400);
     }
 

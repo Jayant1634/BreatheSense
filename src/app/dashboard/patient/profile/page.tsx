@@ -4,17 +4,9 @@ import { useAuth } from '@/lib/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
-  IconUser,
   IconEdit,
-  IconSave,
+  IconCheck,
   IconX,
-  IconMail,
-  IconPhone,
-  IconMapPin,
-  IconCalendar,
-  IconHeart,
-  IconLungs,
-  IconAlertTriangle,
   IconInfoCircle,
   IconShield,
   IconBell,
@@ -40,12 +32,12 @@ export default function ProfilePage() {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingHealth, setIsEditingHealth] = useState(false);
-  const [editedUser, setEditedUser] = useState<any>(null);
+  const [editedUser, setEditedUser] = useState<typeof user | null>(null);
   const [editedHealth, setEditedHealth] = useState<HealthProfile | null>(null);
 
   // Mock health profile data - in real app, this would come from API
   const [healthProfile] = useState<HealthProfile>({
-    height: '5\'8"',
+    height: '5\'8&quot;',
     weight: '150 lbs',
     bloodType: 'O+',
     allergies: ['Pollen', 'Dust'],
@@ -179,13 +171,13 @@ export default function ProfilePage() {
             </button>
           ) : (
             <div className="flex gap-2">
-              <button
-                onClick={handleSaveProfile}
-                className="flex items-center gap-2 px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-xs"
-              >
-                <IconSave className="w-3 h-3" />
-                Save
-              </button>
+                             <button
+                 onClick={handleSaveProfile}
+                 className="flex items-center gap-2 px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-xs"
+               >
+                 <IconCheck className="w-3 h-3" />
+                 Save
+               </button>
               <button
                 onClick={handleCancelEdit}
                 className="flex items-center gap-2 px-3 py-1 bg-neutral-200 hover:bg-neutral-300 text-neutral-800 rounded-lg transition-colors text-xs"
@@ -272,15 +264,84 @@ export default function ProfilePage() {
             <div>
               <label className="block text-xs font-medium text-neutral-600 mb-1">Address</label>
               {isEditing ? (
-                <textarea
-                  value={editedUser?.address || ''}
-                  onChange={(e) => setEditedUser({ ...editedUser, address: e.target.value })}
-                  rows={3}
-                  className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                  placeholder="Enter your address"
-                />
+                <div className="space-y-2">
+                  <input
+                    type="text"
+                    value={editedUser?.address?.street || ''}
+                    onChange={(e) => setEditedUser({ 
+                      ...editedUser, 
+                      address: { 
+                        ...editedUser?.address, 
+                        street: e.target.value 
+                      } 
+                    })}
+                    className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                    placeholder="Street Address"
+                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="text"
+                      value={editedUser?.address?.city || ''}
+                      onChange={(e) => setEditedUser({ 
+                        ...editedUser, 
+                        address: { 
+                          ...editedUser?.address, 
+                          city: e.target.value 
+                        } 
+                      })}
+                      className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      placeholder="City"
+                    />
+                    <input
+                      type="text"
+                      value={editedUser?.address?.state || ''}
+                      onChange={(e) => setEditedUser({ 
+                        ...editedUser, 
+                        address: { 
+                          ...editedUser?.address, 
+                          state: e.target.value 
+                        } 
+                      })}
+                      className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      placeholder="State"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="text"
+                      value={editedUser?.address?.zipCode || ''}
+                      onChange={(e) => setEditedUser({ 
+                        ...editedUser, 
+                        address: { 
+                          ...editedUser?.address, 
+                          zipCode: e.target.value 
+                        } 
+                      })}
+                      className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      placeholder="ZIP Code"
+                    />
+                    <input
+                      type="text"
+                      value={editedUser?.address?.country || ''}
+                      onChange={(e) => setEditedUser({ 
+                        ...editedUser, 
+                        address: { 
+                          ...editedUser?.address, 
+                          country: e.target.value 
+                        } 
+                      })}
+                      className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      placeholder="Country"
+                    />
+                  </div>
+                </div>
               ) : (
-                <p className="text-sm text-neutral-900 font-medium">{user.address || 'Not provided'}</p>
+                <p className="text-sm text-neutral-900 font-medium">
+                  {user.address ? 
+                    `${user.address.street || ''}${user.address.street && user.address.city ? ', ' : ''}${user.address.city || ''}${user.address.city && user.address.state ? ', ' : ''}${user.address.state || ''}${user.address.state && user.address.zipCode ? ' ' : ''}${user.address.zipCode || ''}${user.address.zipCode && user.address.country ? ', ' : ''}${user.address.country || ''}`.trim() || 'Not provided'
+                    : 'Not provided'
+                  }
+                </p>
               )}
             </div>
           </div>
@@ -301,13 +362,13 @@ export default function ProfilePage() {
             </button>
           ) : (
             <div className="flex gap-2">
-              <button
-                onClick={handleSaveHealth}
-                className="flex items-center gap-2 px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-xs"
-              >
-                <IconSave className="w-3 h-3" />
-                Save
-              </button>
+                             <button
+                 onClick={handleSaveHealth}
+                 className="flex items-center gap-2 px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-xs"
+               >
+                 <IconCheck className="w-3 h-3" />
+                 Save
+               </button>
               <button
                 onClick={handleCancelHealthEdit}
                 className="flex items-center gap-2 px-3 py-1 bg-neutral-200 hover:bg-neutral-300 text-neutral-800 rounded-lg transition-colors text-xs"
@@ -328,7 +389,7 @@ export default function ProfilePage() {
                   value={editedHealth?.height || ''}
                   onChange={(e) => setEditedHealth({ ...editedHealth, height: e.target.value })}
                   className="w-full p-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                  placeholder="e.g., 5'8""
+                  placeholder="e.g., 5'8&quot;"
                 />
               ) : (
                 <p className="text-sm text-neutral-900 font-medium">{healthProfile.height}</p>

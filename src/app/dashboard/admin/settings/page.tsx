@@ -6,28 +6,17 @@ import { useEffect, useState } from 'react';
 import { LoadingSpinner } from '@/components/ui/sidebar';
 import {
   IconSettings,
-  IconUser,
   IconShield,
   IconBell,
-  IconDatabase,
   IconDeviceMobile,
-  IconMicrophone,
   IconLungs,
-  IconActivity,
   IconDeviceFloppy,
-  IconRefresh,
-  IconCheck,
-  IconX,
-  IconEdit,
-  IconEye,
-  IconEyeOff,
 } from '@tabler/icons-react';
 
 export default function SettingsPage() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('general');
-  const [showPassword, setShowPassword] = useState(false);
   const [settings, setSettings] = useState({
     general: {
       siteName: 'BreatheSense',
@@ -92,7 +81,7 @@ export default function SettingsPage() {
     return null;
   }
 
-  const handleSettingChange = (category: string, key: string, value: any) => {
+  const handleSettingChange = (category: string, key: string, value: unknown) => {
     setSettings(prev => ({
       ...prev,
       [category]: {

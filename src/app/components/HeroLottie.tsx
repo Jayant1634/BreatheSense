@@ -7,7 +7,7 @@ interface HeroLottieProps {
 }
 
 const HeroLottie: React.FC<HeroLottieProps> = ({ src }) => {
-  const [animationData, setAnimationData] = React.useState<any>(null);
+  const [animationData, setAnimationData] = React.useState<unknown>(null);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {

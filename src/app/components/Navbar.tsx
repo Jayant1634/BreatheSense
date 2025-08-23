@@ -194,7 +194,6 @@ export const MobileNavMenu = ({
   children,
   className,
   isOpen,
-  onClose,
 }: MobileNavMenuProps) => {
   return (
     <AnimatePresence>
@@ -243,23 +242,20 @@ export const NavbarLogo = () => {
   );
 };
 
-export const NavbarButton = ({
+export const NavbarButton = <T extends React.ElementType = "a">({
   href,
-  as: Tag = "a",
+  as: Tag = "a" as T,
   children,
   className,
   variant = "primary",
   ...props
 }: {
   href?: string;
-  as?: React.ElementType;
+  as?: T;
   children: React.ReactNode;
   className?: string;
   variant?: "primary" | "secondary" | "dark" | "gradient";
-} & (
-  | React.ComponentPropsWithoutRef<"a">
-  | React.ComponentPropsWithoutRef<"button">
-)) => {
+} & Omit<React.ComponentPropsWithoutRef<T>, 'as' | 'children' | 'className'>) => {
   const baseStyles =
     "px-4 py-2 rounded-md text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
@@ -286,7 +282,7 @@ export const NavbarButton = ({
   return (
     <Tag
       className={cn(baseStyles, variantStyles[variant], className)}
-      {...props}
+      {...(props as Record<string, unknown>)}
     >
       {children}
     </Tag>
@@ -297,8 +293,8 @@ export const UserMenu = () => {
   const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setIsDropdownOpen(false);
   };
 

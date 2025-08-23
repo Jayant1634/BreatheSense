@@ -8,15 +8,11 @@ import {
   IconPlus,
   IconClock,
   IconMapPin,
-  IconUser,
   IconPhone,
   IconVideo,
   IconMapPinOff,
-  IconEdit,
-  IconTrash,
   IconCheck,
   IconX,
-  IconAlertTriangle,
   IconInfoCircle,
 } from '@tabler/icons-react';
 

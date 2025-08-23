@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/lib/models/User';
 import { generateToken, createErrorResponse, createSuccessResponse } from '@/lib/auth';
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       token
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Login error:', error);
     return createErrorResponse('Internal server error', 500);
   }

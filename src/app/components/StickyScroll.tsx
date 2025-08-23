@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 // Define image URLs for each section from open source collections
@@ -14,21 +13,15 @@ const featureImages = [
 
 export const StickyScroll = ({
   content,
-  contentClassName,
 }: {
   content: {
     title: string;
     description: string;
     content?: React.ReactNode;
   }[];
-  contentClassName?: string;
 }) => {
   const [activeContent, setActiveContent] = useState(0);
   const stickyContainerRef = useRef<HTMLDivElement>(null);
-  
-  // Match website theme
-  const primaryColor = "var(--primary, #D32F2F)";
-  const accentColor = "var(--accent, #26A69A)";
   
   // Calculate scroll progress and update active content
   useEffect(() => {

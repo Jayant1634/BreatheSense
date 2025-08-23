@@ -9,13 +9,12 @@ import {
   IconShare,
   IconTrash,
   IconPlus,
-  IconActivity,
   IconTrendingUp,
-  IconTrendingDown,
   IconMinus,
   IconCalendar,
   IconClock,
   IconChartLine,
+  IconActivity,
 } from '@tabler/icons-react';
 
 interface HealthRecord {

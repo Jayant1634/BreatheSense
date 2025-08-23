@@ -20,9 +20,8 @@ import {
 } from "@tabler/icons-react";
 
 // Separate component that uses the sidebar context
-function DashboardContent({ user }: { user: any }) {
-  const { open } = useSidebar();
-  const pathname = usePathname();
+function DashboardContent({ user, onLogout }: { user: unknown; onLogout: () => void }) {
+  const { open, animate } = useSidebar();
 
   // Define links based on user role
   const patientLinks = [
@@ -35,6 +34,11 @@ function DashboardContent({ user }: { user: any }) {
       label: "Health Data",
       href: "/dashboard/patient/health-data",
       icon: <IconClipboardData className="w-5 h-5" />,
+    },
+    {
+      label: "Prediction Analysis",
+      href: "/dashboard/patient/prediction-analysis",
+      icon: <IconActivity className="w-5 h-5" />,
     },
     {
       label: "Devices",
@@ -132,15 +136,21 @@ function DashboardContent({ user }: { user: any }) {
         {/* Logout Section */}
         <div className="mt-auto mb-4 flex-shrink-0">
           <div
-            className="flex items-center justify-start gap-3 py-2 px-3 text-red-400 hover:text-red-300 hover:bg-neutral-800 rounded-lg transition-all duration-200 cursor-pointer"
-            onClick={() => {
-              // Handle logout here
-              window.location.href = '/';
-            }}
+            className="flex items-center justify-start gap-3 py-2 px-3 hover:bg-neutral-800 rounded-lg transition-all duration-200 cursor-pointer group/sidebar"
+            onClick={onLogout}
           >
-            <IconLogout className="w-5 h-5 flex-shrink-0" />
+            <IconLogout className="w-5 h-5 flex-shrink-0 text-red-400 group-hover/sidebar:text-red-300 transition-colors" />
             <motion.span
-              className="text-sm font-medium group-hover:translate-x-1 transition duration-200 whitespace-nowrap overflow-hidden"
+              animate={{
+                opacity: animate ? (open ? 1 : 0) : 1,
+                width: animate ? (open ? "auto" : 0) : "auto",
+                marginLeft: animate ? (open ? "12px" : 0) : "12px",
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut",
+              }}
+              className="text-sm font-medium text-red-400 group-hover/sidebar:text-red-300 group-hover:translate-x-1 transition duration-200 whitespace-nowrap overflow-hidden"
             >
               Logout
             </motion.span>
@@ -158,7 +168,6 @@ export default function DashboardLayout({
 }) {
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -166,8 +175,8 @@ export default function DashboardLayout({
     }
   }, [user, isLoading, router]);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     router.push("/");
   };
 
@@ -186,7 +195,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-neutral-50">
       <Sidebar>
-        <DashboardContent user={user} />
+        <DashboardContent user={user} onLogout={handleLogout} />
       </Sidebar>
       {/* Main content area with proper spacing */}
       <div className="md:ml-[80px] min-h-screen pt-16 md:pt-0">

@@ -11,12 +11,10 @@ import {
   IconTrash,
   IconEye,
   IconDeviceMobile,
-  IconMicrophone,
   IconWifi,
   IconBattery,
   IconSettings,
   IconActivity,
-  IconAlertTriangle,
   IconCheck,
   IconX,
 } from '@tabler/icons-react';
@@ -146,7 +144,6 @@ export default function DevicesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
-  const [selectedDevice, setSelectedDevice] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {

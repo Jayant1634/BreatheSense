@@ -11,7 +11,6 @@ import {
   IconAlertCircle,
   IconInfoCircle,
   IconCheck,
-  IconX,
   IconEye,
   IconTrash,
   IconUser,
@@ -150,7 +149,7 @@ const mockAlerts = [
 export default function AlertsPage() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
-  const [alerts, setAlerts] = useState(mockAlerts);
+  const [alerts] = useState(mockAlerts);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');

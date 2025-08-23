@@ -8,10 +8,7 @@ import {
   IconDeviceMobile,
   IconCalendar,
   IconUser,
-  IconActivity,
-  IconAlertTriangle,
   IconHeartbeat,
-  IconTrendingUp,
 } from '@tabler/icons-react';
 
 export default function DashboardPage() {

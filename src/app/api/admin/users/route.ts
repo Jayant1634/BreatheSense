@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/lib/models/User';
 import { requireAdmin, createErrorResponse, createSuccessResponse } from '@/lib/auth';
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get('search');
 
     // Build query
-    const query: any = {};
+    const query: Record<string, unknown> = {};
     if (role) query.role = role;
     if (search) {
       query.$or = [
@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
       }
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Admin users fetch error:', error);
     return createErrorResponse('Internal server error', 500);
   }
@@ -74,7 +74,7 @@ export async function PUT(req: NextRequest) {
       return createErrorResponse('User ID and action are required');
     }
 
-    let updateData: any = {};
+    let updateData: Record<string, unknown> = {};
 
     switch (action) {
       case 'updateStatus':
@@ -119,11 +119,12 @@ export async function PUT(req: NextRequest) {
       user: updatedUser
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Admin user update error:', error);
     
-    if (error.name === 'ValidationError') {
-      const validationErrors = Object.values(error.errors).map((err: any) => err.message);
+    if (error && typeof error === 'object' && 'name' in error && error.name === 'ValidationError') {
+      const validationError = error as unknown as { errors: Record<string, { message: string }> };
+      const validationErrors = Object.values(validationError.errors).map((err: { message: string }) => err.message);
       return createErrorResponse(`Validation error: ${validationErrors.join(', ')}`, 400);
     }
 

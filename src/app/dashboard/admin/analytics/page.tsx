@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   BarChart,
   Bar,
@@ -15,8 +15,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  LineChart,
-  Line,
   AreaChart,
   Area,
 } from 'recharts';
@@ -25,7 +23,6 @@ import {
   IconMicrophone,
   IconLungs,
   IconActivity,
-  IconTrendingUp,
   IconAlertTriangle,
 } from '@tabler/icons-react';
 
@@ -100,16 +97,7 @@ const soundTypeData = [
   { type: 'Both', count: 506, color: '#FFE4B5' },
 ];
 
-// Mock data for chest locations
-const chestLocationData = [
-  { location: 'Trachea', count: 120, color: '#FF6B6B' },
-  { location: 'Anterior Left', count: 150, color: '#4ECDC4' },
-  { location: 'Anterior Right', count: 150, color: '#45B7D1' },
-  { location: 'Posterior Left', count: 150, color: '#96CEB4' },
-  { location: 'Posterior Right', count: 150, color: '#FFEAA7' },
-  { location: 'Lateral Left', count: 100, color: '#DDA0DD' },
-  { location: 'Lateral Right', count: 100, color: '#98D8C8' },
-];
+
 
 export default function AnalyticsPage() {
   const { user, isLoading } = useAuth();

@@ -40,7 +40,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
   signup: (userData: SignupData) => Promise<{ success: boolean; message: string }>;
-  logout: () => void;
+  logout: () => Promise<void>;
   updateProfile: (data: Partial<User>) => Promise<{ success: boolean; message: string }>;
 }
 
@@ -161,10 +161,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('breathesense_token');
+  const logout = async () => {
+    try {
+      // Call logout API endpoint for logging purposes
+      if (token) {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Logout API call failed:', error);
+      // Continue with logout even if API call fails
+    } finally {
+      // Always clear local state regardless of API call success
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem('breathesense_token');
+    }
   };
 
   const updateProfile = async (data: Partial<User>) => {

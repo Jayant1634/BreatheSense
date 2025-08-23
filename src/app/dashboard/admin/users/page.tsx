@@ -12,9 +12,6 @@ import {
   IconTrash,
   IconEye,
   IconUser,
-  IconMail,
-  IconPhone,
-  IconCalendar,
   IconShield,
 } from '@tabler/icons-react';
 
@@ -140,7 +137,6 @@ export default function UsersPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [selectedUser, setSelectedUser] = useState<any>(null);
 
   useEffect(() => {
     if (!isLoading && !user) {

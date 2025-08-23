@@ -8,15 +8,14 @@ import {
   IconFilter,
   IconDownload,
   IconEye,
+  IconTrash,
+  IconUser,
   IconMicrophone,
   IconLungs,
+  IconActivity,
+  IconClock,
   IconAlertTriangle,
   IconCheck,
-  IconX,
-  IconClock,
-  IconUser,
-  IconCalendar,
-  IconActivity,
 } from '@tabler/icons-react';
 
 // Mock patient report data
@@ -144,7 +143,6 @@ export default function ReportsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [diagnosisFilter, setDiagnosisFilter] = useState('all');
-  const [selectedReport, setSelectedReport] = useState<any>(null);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -348,7 +346,7 @@ export default function ReportsPage() {
                   <td className="p-3">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 text-xs">
-                        <IconCalendar className="w-3 h-3 text-neutral-500" />
+                        <IconClock className="w-3 h-3 text-neutral-500" />
                         <span className="text-neutral-700">{report.recordingDate}</span>
                       </div>
                       <div className="flex items-center gap-2 text-xs">

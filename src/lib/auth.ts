@@ -33,7 +33,7 @@ export function generateToken(user: IUser): string {
 export function verifyToken(token: string): JWTPayload | null {
   try {
     return jwt.verify(token, JWT_SECRET) as JWTPayload;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -90,6 +90,6 @@ export function createErrorResponse(message: string, status: number = 400) {
 }
 
 // Helper function to create success response
-export function createSuccessResponse(data: any, status: number = 200) {
+export function createSuccessResponse(data: unknown, status: number = 200) {
   return NextResponse.json(data, { status });
 }
